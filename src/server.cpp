@@ -9,12 +9,12 @@
 void child(int sig)
 {
     pid_t pid;
-    pid = wait(nullptr);
+    pid = wait(nullptr); // Ждем завершение дочернего процесса
 }
 
 int main(int argc, char **argv)
 {
-    signal(SIGCHLD, child);
+    signal(SIGCHLD, child); // Перехват неожиданных сигналов или событий (номер сигнала, функция обработки сигнала)
     if (argc != 4)
     {
         return 0;
