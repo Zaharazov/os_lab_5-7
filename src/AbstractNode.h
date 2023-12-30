@@ -15,7 +15,8 @@ using std::to_string;
 class AbstractNode 
 {
     public:
-        explicit AbstractNode(int id) : Id(id), Port(ZmqUtils::PORT_TO_BIND_FROM),outerNodes(), context(1), Receiver(context, zmq::socket_type::rep)
+    // предотвращает неявное преобразование типов
+        explicit AbstractNode(int id) : Id(id), Port(ZmqUtils::PORT_TO_BIND_FROM), outerNodes(), context(1), Receiver(context, zmq::socket_type::rep)
         {
             occupyPort();
         }
@@ -24,10 +25,10 @@ class AbstractNode
 
         pid_t addChild(int id, int registerPort) 
         {
-            pid_t child = fork();
+            pid_t child = fork(); // дочерний процесс
             if (child == 0) 
             {
-                execl("server", to_string(id).c_str(), to_string(Id).c_str(),to_string(Port).c_str(), to_string(registerPort).c_str(), NULL);
+                execl("server", to_string(id).c_str(), to_string(Id).c_str(),to_string(Port).c_str(), to_string(registerPort).c_str(), NULL); // запустить процесс
             }
             else if (child < 0)
             { 
@@ -40,10 +41,10 @@ class AbstractNode
         int Id;
         int Port;
         std::map<int, ChildNodeInfo> outerNodes;
-        zmq::context_t context;
-        zmq::socket_t Receiver;
+        zmq::context_t context; // коллекция объектов
+        zmq::socket_t Receiver; // связь узлов
 
-        void occupyPort() 
+        void occupyPort() // занять порт
         {
             Port = ZmqUtils::occupyPort(Receiver);
         }
