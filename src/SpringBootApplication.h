@@ -215,7 +215,6 @@ class SpringBootApplication : public AbstractNode
                 Message request(MessageTypes::CREATE_REQUEST, Id, server.first, sizeof(data), data);
                 Message result;
                 request.sendMessage(requestSocket);
-                //result.receiveMessage(requestSocket);
                 if (!result.receiveMessage(requestSocket, std::chrono::milliseconds(2000))) 
                 {
                     requestSocket.disconnect(ZmqUtils::getOutputAddress(server.second.ReceiverPort));
@@ -248,7 +247,6 @@ class SpringBootApplication : public AbstractNode
                 message.recieverId = server.first;
                 message.sendMessage(request);
                 Message result;
-                //result.receiveMessage(request);
                 if (!result.receiveMessage(request, std::chrono::milliseconds(2000))) 
                 {
                     request.disconnect(ZmqUtils::getOutputAddress(server.second.ReceiverPort));
@@ -282,10 +280,7 @@ class SpringBootApplication : public AbstractNode
                 request.connect(ZmqUtils::getOutputAddress(server.second.ReceiverPort));
                 messageExit.sendMessage(request);
                 messageExit.receiveMessage(request, std::chrono::milliseconds(2000));
-                //messageExit.sendMessage(Receiver);
                 Message exitResult;
-                //messageExit.receiveMessage(Receiver, std::chrono::milliseconds(1000));
-                //exitResult.receiveMessage(request);
                 request.disconnect(ZmqUtils::getOutputAddress(server.second.ReceiverPort));
             }
             std::cout << "servers dead" << std::endl;
