@@ -22,8 +22,10 @@ class Message
         Message(): Message(MessageTypes::EMPTY, -1, -1, 0, nullptr) {}
 
         Message(MessageTypes messageType, int senderId, int receiverId):Message(messageType, senderId, receiverId, 0, nullptr) {}
-        ~Message() {
-            if (body != nullptr) {
+        ~Message() 
+        {
+            if (body != nullptr) 
+            {
                 free(body);
                 body = nullptr;
             }
